@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   `],
   template: `
     <h3>Template Reference Variables</h3>
+    <h1 welcome="Angular">Hello Angular!</h1>
     <div class="toolbar">
       <input #box type="text" placeholder="Type something" (input)="current = box.value" />
       <button (click)="read(box.value)">Read value</button>
