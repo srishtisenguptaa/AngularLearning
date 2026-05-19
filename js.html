@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>India Age Checker</title>
+    </head>
+    <body>
+        <h1>India Age Privilege Checker 🇮🇳</h1>
+        <input type="text" id="myTextbox2" placeholder="Enter your Name"><br><br>
+        <input type="text" id="myTextbox1" placeholder="Enter your age"><br><br>
+        <button id="mybutton">Check What I Can Do</button><br><br>
+        <b id='Myname'></b>
+        <div id="results"></div>
+
+        <script>
+            var adultPrivileges = [
+                'Vote in elections 🗳️',
+                'Get a driving licence 🚗',
+                'Get a passport without parents signature 🛂',
+                'Buy property in your name 🏠',
+            ];
+
+            var minorPrivileges = [
+                'Child ticket price in trains & buses 🚌',
+                'No income tax tension 😎',
+                'Parents pay for everything 🙏',
+                'School/college fee concessions 📚',
+            ];
+
+            function capitalizeEachWord(string) {
+                return string
+                    .split(' ')
+                    .map(function(word) {
+                        return word.charAt(0).toUpperCase() + word.slice(1);
+                    })
+                    .join(' ');
+            }
+
+            const person = {
+                name: '',
+                age: 0
+            };
+
+            var namePattern = /^[a-zA-Z\s]+$/;
+
+            // Live validation while typing name
+            document.getElementById('myTextbox2').addEventListener('input', function() {
+
+                let rawName = this.value.trim();
+
+                if (rawName === '') {
+                    document.getElementById('Myname').innerText = '';
+
+                } else if (!namePattern.test(rawName)) {
+                    document.getElementById('Myname').innerText = '❌ Only letters allowed!';
+                    document.getElementById('Myname').style.color = 'red';
+
+                } else {
+                    let name = capitalizeEachWord(rawName); // ✅ fixed
+                    document.getElementById('Myname').innerText = 'Hello, ' + name + '!';
+                    document.getElementById('Myname').style.color = 'green';
+                }
+            });
+
+            // Button click — age check
+            document.getElementById('mybutton').addEventListener('click', function() {
+
+                let rawName = document.getElementById('myTextbox2').value.trim();
+                var age = Number(document.getElementById('myTextbox1').value);
+                var output = '';
+
+                if (rawName === '') {
+                    output = '<p style="color:red">❌ Please enter your name!</p>';
+                    document.getElementById('results').innerHTML = output;
+                    return;
+
+                }
+                
+                else if (!namePattern.test(rawName)) {
+                    output = '<p style="color:red">❌ Name must contain only letters!</p>';
+                    document.getElementById('results').innerHTML = output;
+                    return;
+                }
+
+                if (age <= 0 || isNaN(age)) {
+                    output = '<p style="color:red">❌ Please enter a valid age!</p>';
+                    document.body.style.backgroundColor = "#fff3e0";
+
+                } else if (age >= 18) {
+                    let name = capitalizeEachWord(rawName); // ✅ fixed
+                    output += '<h2>' + name + ', you are ' + age + ' — Adult in India! 🎉</h2>';
+                    output += '<p>Here is what you can now do in India:</p>';
+                    document.body.style.backgroundColor = "#e0f7fa";
+
+                    for (var i = 0; i < adultPrivileges.length; i++) {
+                        output += '<p>✅ ' + adultPrivileges[i] + '</p>';
+                    }
+
+                } else {
+                    let name = capitalizeEachWord(rawName); // ✅ fixed
+                    output += '<h2>' + name + ', you are ' + age + ' — Minor in India 🧒</h2>';
+                    output += '<p>You CANNOT do adult things yet, but you enjoy:</p>';
+                    document.body.style.backgroundColor = "#fff3e0";
+
+                    for (var i = 0; i < minorPrivileges.length; i++) {
+                        output += '<p>🎈 ' + minorPrivileges[i] + '</p>';
+                    }
+
+                    var yearsLeft = 18 - age;
+                    output += '<br><p style="color:gray">⏳ ' + yearsLeft + ' more years until you are an adult!</p>';
+                }
+
+                document.getElementById('results').innerHTML = output;
+            });
+        </script>
+    </body>
+</html>
